@@ -125,7 +125,7 @@ public class Game implements MyObserver {
 		boolean isHit = false;
 		for(Ship ship: ships) {
 			Cell cell = missile.getTargetCell();
-			if(ship.damage(cell.getX(), cell.getY()))
+			if(ship.damage(cell.getX(), cell.getY(), missile.getDamage()))
 				return true;
 		}
 		return isHit;

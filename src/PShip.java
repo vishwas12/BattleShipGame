@@ -29,11 +29,11 @@ public class PShip extends Ship {
 	}
 	
 	@Override
-	public boolean damage(int x, char y) {
+	public boolean damage(int x, char y, int damage) {
 		for(int i=0;i<activeCells.size();i++) {
 			Cell cell = activeCells.get(i);
 			if(x == cell.x && y == cell.y && cell.getHealth()>0){
-				cell.setHealth(cell.getHealth()-1);
+				cell.setHealth(cell.getHealth()-damage);
 				activeCells.remove(i);
 				inactiveCells.add(cell);
 				return true;

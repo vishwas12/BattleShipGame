@@ -5,7 +5,8 @@ public class WeaponFactory {
 		Weapon weapon = null;
 		switch (type) {
 		case "M":
-			weapon = new Missile(cell);
+			int damage = 2;
+			weapon = new Missile(cell, damage);
 			break;
 
 		default:
