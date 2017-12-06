@@ -7,7 +7,7 @@ public abstract class Ship {
 	
 	public abstract void createShip(int width, int height, Cell cell);
 	
-	public abstract boolean damage(int x, char y, int damage);
+	public abstract boolean damage(int damage, List<Cell> effectingCells);
 	
 	public final char getNextYCell(char x, int index) {
 		return (char)(x+index);

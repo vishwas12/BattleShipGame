@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class QShip extends Ship {
 	
@@ -28,8 +29,9 @@ public class QShip extends Ship {
 	}
 	
 	@Override
-	public boolean damage(int x, char y, int damage) {
-		for(int i=0;i<activeCells.size();i++) {
+	public boolean damage(int damage, List<Cell> effectingCells) {
+		boolean isHit = false;
+		/*for(int i=0;i<activeCells.size();i++) {
 			Cell cell = activeCells.get(i);
 			if(x == cell.x && y == cell.y && cell.getHealth()>0){
 				cell.setHealth(cell.getHealth()-damage);
@@ -37,7 +39,18 @@ public class QShip extends Ship {
 				inactiveCells.add(cell);
 				return true;
 			}
+		}*/
+		for(int i=0;i<effectingCells.size();i++) {
+			for(int j=0;j<activeCells.size();j++) {
+				if(effectingCells.get(i).getX() == activeCells.get(j).getX()
+						&& effectingCells.get(i).getY() == activeCells.get(j).getY() && activeCells.get(j).health > 0) {
+					activeCells.get(j).setHealth(activeCells.get(j).getHealth() - damage);
+					inactiveCells.add(activeCells.get(j));
+					activeCells.remove(j);
+					isHit = true;
+				}
+			}
 		}
-		return false;
+		return isHit;
 	}
 }

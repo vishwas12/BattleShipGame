@@ -40,7 +40,7 @@ public class Utility {
 		for(int j=0;j<missile.length;j++) {
 			char m[] = missile[j].toCharArray();
 			Cell m_cell = new Cell(m[1]-'0', m[0]);
-			Weapon weapon = weaponFactory.getWeaponType("M", m_cell);
+			Weapon weapon = weaponFactory.getWeaponType("D", m_cell);
 			weapons.add(weapon);
 		}
 		return weapons;

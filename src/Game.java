@@ -72,10 +72,10 @@ public class Game implements MyObserver {
 					giveChanceToOtherPlayer(false,true);
 				}
 				if(!isGameEnded()){
-					if(updateShipHealthAndNotify(ships, (Missile)player1.getWeapon().get(player1.missileNumber-1))){
+					if(updateShipHealthAndNotify(ships, player1.getWeapon().get(player1.missileNumber-1),player2)){
 						player1chance = true;
-						Missile missile = (Missile)player1.getWeapon().get(player1.missileNumber-1);
-						System.out.println(player1.getName()+" fires a missile with target "+missile.getTargetCell().getY()+missile.getTargetCell().getX()+" which got hit.");
+						Weapon missile = player1.getWeapon().get(player1.missileNumber-1);
+						System.out.println(player1.getName()+" fires a missile with target "+missile.targetCell.getY()+missile.targetCell.getX()+" which got hit.");
 						if(checkIfGameEnded(player2)){
 							player1.setWon(true);
 						}
@@ -83,8 +83,8 @@ public class Game implements MyObserver {
 					}else {
 						player1chance = false;
 						player2chance = true;
-						Missile missile = (Missile)player1.getWeapon().get(player1.missileNumber-1);
-						System.out.println(player1.getName()+" fires a missile with target "+missile.getTargetCell().getY()+missile.getTargetCell().getX()+" which got miss.");
+						Weapon missile = player1.getWeapon().get(player1.missileNumber-1);
+						System.out.println(player1.getName()+" fires a missile with target "+missile.targetCell.getY()+missile.targetCell.getX()+" which got miss.");
 						if(checkIfGameEnded(player2)){
 							player1.setWon(true);
 						}
@@ -98,10 +98,10 @@ public class Game implements MyObserver {
 					giveChanceToOtherPlayer(true,false);
 				}
 				if(!isGameEnded()) {
-					if(updateShipHealthAndNotify(ships, (Missile)player2.getWeapon().get(player2.missileNumber-1))){
+					if(updateShipHealthAndNotify(ships, player2.getWeapon().get(player2.missileNumber-1),player1)){
 						player2chance = true;
-						Missile missile = (Missile)player2.getWeapon().get(player2.missileNumber-1);
-						System.out.println(player2.getName()+" fires a missile with target "+missile.getTargetCell().getY()+missile.getTargetCell().getX()+" which got hit.");
+						Weapon missile = player2.getWeapon().get(player2.missileNumber-1);
+						System.out.println(player2.getName()+" fires a missile with target "+missile.targetCell.getY()+missile.targetCell.getX()+" which got hit.");
 						if(checkIfGameEnded(player1)){
 							player2.setWon(true);
 						}
@@ -109,8 +109,8 @@ public class Game implements MyObserver {
 					}else {
 						player2chance = false;
 						player1chance = true;
-						Missile missile = (Missile)player2.getWeapon().get(player2.missileNumber-1);
-						System.out.println(player2.getName()+" fires a missile with target "+missile.getTargetCell().getY()+missile.getTargetCell().getX()+" which got miss.");
+						Weapon missile = player2.getWeapon().get(player2.missileNumber-1);
+						System.out.println(player2.getName()+" fires a missile with target "+missile.targetCell.getY()+missile.targetCell.getX()+" which got miss.");
 						if(checkIfGameEnded(player1)){
 							player2.setWon(true);
 						}
@@ -121,11 +121,12 @@ public class Game implements MyObserver {
 		
 	}
 	
-	private boolean updateShipHealthAndNotify(List<Ship> ships, Missile missile) {
+	private boolean updateShipHealthAndNotify(List<Ship> ships, Weapon missile, Player player) {
 		boolean isHit = false;
 		for(Ship ship: ships) {
-			Cell cell = missile.getTargetCell();
-			if(ship.damage(cell.getX(), cell.getY(), missile.getDamage()))
+			Cell cell = missile.targetCell;
+			List<Cell> effectingCells = missile.getEffectingCells(cell, player.getBoard());
+			if(ship.damage(missile.damage, effectingCells))
 				return true;
 		}
 		return isHit;

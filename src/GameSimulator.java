@@ -68,8 +68,8 @@ public class GameSimulator {
 		
 		Player player1 = new Player();
 		Player player2 = new Player();
-		Board board1 = new Board();
-		Board board2 = new Board();
+		Board board1 = new Board(width, height%65+1);
+		Board board2 = new Board(width, height%65+1);
 		board1.createShip(shipRequest1);
 		board2.createShip(shipRequest2);
 		
